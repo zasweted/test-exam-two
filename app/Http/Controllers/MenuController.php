@@ -41,10 +41,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $imagePath = request('url')->store('uploads', 'public');
-        $image = Image::make(public_path("storage/{$imagePath}"))->fit(600, 600);
-        $image->save();
-
+        
         $request->validate(
             [
                 'dish_name' => 'required',
@@ -57,8 +54,12 @@ class MenuController extends Controller
                 'price.required' => 'The Price field is required.',
                 'url.required' => 'The Image is required.',
                 'restaurant_id' => 'You must choose a Restaurant.'
-            ]
-        );
+                ]
+            );
+            
+            $imagePath = request('url')->store('uploads', 'public');
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(600, 600);
+            $image->save();
 
         Menu::create([
             'dish_name' => $request->dish_name,
@@ -125,14 +126,19 @@ class MenuController extends Controller
             $imagePath = request('url')->store('uploads', 'public');
             $image = Image::make(public_path("storage/{$imagePath}"))->fit(600, 600);
             $image->save();
+            $menu->update([
+                'dish_name' => $request->dish_name,
+                'price' => $request->price,
+                'url' => $imagePath,
+                'restaurant_id' => $request->restaurant_id
+            ]);
+        }else{
+            $menu->update([
+                'dish_name' => $request->dish_name,
+                'price' => $request->price,
+                'restaurant_id' => $request->restaurant_id
+            ]);
         }
-
-        $menu->update([
-            'dish_name' => $request->dish_name,
-            'price' => $request->price,
-            'url' => $imagePath,
-            'restaurant_id' => $request->restaurant_id
-        ]);
 
         return redirect()->route('menu.index');
     }

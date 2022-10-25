@@ -139,6 +139,7 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
+        $restaurant->getMenus()->delete();
         $restaurant->delete();
 
         return redirect()->route('restaurant.index');

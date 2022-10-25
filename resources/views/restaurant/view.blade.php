@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="row">
-    <div class="col-10 mx-4">
+<div class="row justify-content-center">
+    <div class="col-11 mx-4">
         <div class="card">
             <h1 class=" card-header">{{ $restaurant->rest_name }}</h1>
             <div class="card-body">
@@ -12,12 +12,12 @@
                 <p class="card-text">{{ $restaurant->address }}</p>
                 <p class="card-text"><span style="font-weight: 600">Restaurant open From </span>
                     {{ $restaurant->open_at }} <span style="font-weight: 600">to</span> {{ $restaurant->close_at }}</p>
-                <p class="card-text"><span style="font-weight: 600">Restaurant Menu Items </span>
-                <div class="d-flex">
+                <p class="card-text"><span style="font-weight: 600">Restaurant Menu Items: </span>
+                <div class="d-flex flex-wrap">
                     @foreach($restaurant->getMenus as $menu)
-                    <div class="col-5 mx-4">
+                    <div class="col-3 mt-2 mb-2 mx-4">
                         <div class="card">
-                            <h1 class="card-header">{{ $menu->dish_name }}</h1>
+                            <h1 class="card-title ">{{ $menu->dish_name }}</h1>
                             <div class="card-body">
                                 <span style="font-weight: 600">Price:</span>
                                 <h5 class="card-title">{{ $menu->price }} $</h5>
@@ -30,7 +30,7 @@
                 
                 </div>  
                 <div class="col-4">
-                    <form action="{{ route('restaurant.delete', $restaurant) }}" method="post">
+                    <form action="{{ route('restaurant.delete', $restaurant) }}" method="post" onsubmit="return confirm('Are you sure you want to delete {{ $restaurant->rest_name }}');">
                         @csrf
                         @method('delete')
                         <div class="row g-3 align-items-center">
@@ -56,3 +56,5 @@
 
 
 @endsection
+
+

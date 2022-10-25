@@ -56,6 +56,7 @@
                             @enderror
                             <div>
                                 <button type="submit" class="btn btn-primary mt-4">Create Restaurant</button>
+                                <a href="{{ route('restaurant.index') }}" class="btn btn-primary mx-2 mt-4">Back</a>
                             </div>
                         </div>
                     </form>

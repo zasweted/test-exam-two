@@ -1,10 +1,9 @@
 @extends('layouts.app')
 @section('content')
 <div class="container mb-4">
-    <div class="row justify-content-end">
+    <div class="row justify-content-center">
         <div class="col-2">
-            <a href="{{ route('restaurant.create') }}" class="btn btn-info">Add New Restaurant</a>
-            <a href="{{ route('menu.create') }}" class="btn btn-info">Add Menu Item</a>
+            <h1>Menu List</h1>
         </div>
     </div>
 

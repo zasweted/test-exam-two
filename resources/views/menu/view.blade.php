@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="col-4 mx-3 mb-3">
-                    <form action="{{ route('menu.delete', $menu) }}" method="post">
+                    <form action="{{ route('menu.delete', $menu) }}" method="post" onsubmit="return confirm('Are you sure you want to delete {{ $menu->dish_name }}');">
                         @csrf
                         @method('delete')
                         <div class="row g-3 align-items-center">

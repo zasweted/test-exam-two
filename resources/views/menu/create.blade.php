@@ -48,6 +48,7 @@
 
                         <div>
                             <button type="submit" class="btn btn-primary mt-4">Create Menu Item</button>
+                            <a href="{{ route('menu.index') }}" class="btn btn-primary mx-2 mt-4">Back</a>
                         </div>
                 </div>
                 </form>
