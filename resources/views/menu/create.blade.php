@@ -22,23 +22,24 @@
                         </div>
                         <div class="mb-3">
                             <label for="price" class="form-label">Price</label>
-                            <input type="number" name="price" min="0" step="0.1" class="form-control" id="price">
+                            <input type="number" name="price" min="0" step="any" class="form-control" id="price">
                             @error('price')
                             <div style="color: crimson; font-size:12px">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="image" class="form-label">Image</label>
-                            <input type="file" name="url" class="form-control" id="image">
-                            @error('image')
+                            <label for="url" class="form-label">Image</label>
+                            <input type="file" name="url" class="form-control" id="url">
+                            @error('url')
                             <div style="color: crimson; font-size:12px">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <select class="form-select" name="restaurant_id">
-                            @foreach($restaurants as $restaurant)
+                            <label for="restaurant" class="form-label">Assign a Restaurant</label>
+                            <select class="form-select" name="restaurant_id" id="restaurant">
+                                @foreach($restaurants as $restaurant)
                                 <option value="{{ $restaurant->id }}" selected>{{ $restaurant->rest_name }}</option>
-                            @endforeach
+                                @endforeach
                             </select>
                             @error('restaurant_id')
                             <div style="color: crimson; font-size:12px">{{ $message }}</div>

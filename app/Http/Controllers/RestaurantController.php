@@ -139,6 +139,13 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
+        foreach($restaurant->getMenus as $menu)
+        if($menu->url){
+            
+            
+                unlink(public_path().'/storage/'. $menu->url);
+            
+        }
         $restaurant->getMenus()->delete();
         $restaurant->delete();
 

@@ -47,7 +47,7 @@ class MenuController extends Controller
             [
                 'dish_name' => 'required',
                 'price' => 'required',
-                'url' => ['required', 'image'],
+                'url' => ['required','image'],
                 'restaurant_id' => 'required'
             ],
             [
