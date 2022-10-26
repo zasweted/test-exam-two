@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class MenuController extends Controller
@@ -151,6 +152,11 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
+        if($menu->url){
+            
+            unlink(public_path().'/storage/'. $menu->url);
+        }
+
         $menu->delete();
         return redirect()->route('menu.index');
     }
