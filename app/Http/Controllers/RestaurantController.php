@@ -13,13 +13,23 @@ class RestaurantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         
+        $restaurants = match($request->sort){
+            'title_asc' => Restaurant::orderBy('rest_name', 'asc')->get(),
+            'title_desc' => Restaurant::orderBy('rest_name', 'desc')->get(),
+            default => Restaurant::all()
+        };
+
         return view('restaurant.index', [
-            'restaurants' => Restaurant::orderBy('rest_name', 'asc')->get()
+            'restaurants' => $restaurants,
+            'sortSelect' => $request->sort,
         ]);
+
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -72,13 +82,15 @@ class RestaurantController extends Controller
      * @param  \App\Models\Restaurant  $restaurant
      * @return \Illuminate\Http\Response
      */
-    public function show(Restaurant $restaurant, Menu $menu)
+    public function show(Restaurant $restaurant, Request $request)
     {
 
-    //    dd(Menu::all());
+        $sortMenus = $restaurant->sortMenu($request->sort);
+        
         return view('restaurant.view', [
             'restaurant' => $restaurant,
-            'menu' => Menu::all()
+            'sortMenus' => $sortMenus,
+            'sortSelect' => $request->sort
         ]);
     }
 
