@@ -18,6 +18,17 @@ class Restaurant extends Model
         return $this->hasMany(Menu::class, 'restaurant_id','id');
     }
 
+    public function sortRestaurants($sort)
+    {
+        $sortedRestaurants = match($sort){
+            'title_asc' => Restaurant::orderBy('rest_name', 'asc')->get(),
+            'title_desc' => Restaurant::orderBy('rest_name', 'desc')->get(),
+            default => Restaurant::all()
+        };
+
+        return $sortedRestaurants;
+    }
+
     public function sortMenu($sort)
     {
         $sortedMenu = match($sort){
@@ -27,5 +38,24 @@ class Restaurant extends Model
         };
 
         return $sortedMenu;
+    }
+
+    public function searchMenu($search)
+    {
+        if($search){
+            $searchMenu = explode(' ', $search);
+            if(count($searchMenu) == 1){
+                return $this->hasMany(Menu::class, 'restaurant_id', 'id')->where('dish_name', 'like', '%'.$search.'%');
+            }else{
+                return $this->hasMany(Menu::class, 'restaurant_id', 'id')
+                ->where('dish_name', 'like', '%'.$searchMenu[0].'%'.$searchMenu[1].'%')
+                ->orWhere('dish_name', 'like', '%'.$searchMenu[1].'%'.$searchMenu[0].'%')
+                ->orWhere('dish_name', 'like', '%'.$searchMenu[0].'%')
+                ->orWhere('dish_name', 'like', '%'.$searchMenu[1].'%')->get();
+            }
+        }else{
+            return $this->hasMany(Menu::class, 'restaurant_id','id')->get();
+        }
+        
     }
 }

@@ -13,14 +13,10 @@ class RestaurantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, Restaurant $restaurant)
     {
         
-        $restaurants = match($request->sort){
-            'title_asc' => Restaurant::orderBy('rest_name', 'asc')->get(),
-            'title_desc' => Restaurant::orderBy('rest_name', 'desc')->get(),
-            default => Restaurant::all()
-        };
+        $restaurants = $restaurant->sortRestaurants($request->sort);
 
         return view('restaurant.index', [
             'restaurants' => $restaurants,
@@ -86,11 +82,14 @@ class RestaurantController extends Controller
     {
 
         $sortMenus = $restaurant->sortMenu($request->sort);
-        
+        $searchMenus = $restaurant->searchMenu($request->search);
+        // dd($search);
         return view('restaurant.view', [
             'restaurant' => $restaurant,
             'sortMenus' => $sortMenus,
-            'sortSelect' => $request->sort
+            'searchMenus' => $searchMenus,
+            'sortSelect' => $request->sort,
+            'search' => $request->search ?? ''
         ]);
     }
 

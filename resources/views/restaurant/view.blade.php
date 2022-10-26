@@ -23,13 +23,21 @@
                                         <option value="price_asc" @if('price_asc'==$sortSelect) selected @endif>Price Low to High</option>
                                         <option value="price_desc" @if('price_desc'==$sortSelect) selected @endif>Price High to Low</option>
                                     </select>
-                                    <button type="submit" class="btn btn-primary mx-2">Sort</button>
+                                    <button type="submit" class="btn p-0 px-2 btn-primary mx-2">Sort</button>
+                                </div>
+                            </form>
+                            <form action="{{ route('restaurant.show', $restaurant) }}" method="get">
+                                @csrf
+                                <div class="col-4 mb-4 mt-4">
+                                    <label class="form-label mx-2" for="search">Search: </label>
+                                    <input type="text" name="search" id="search" value="{{ $search }}">
+                                    <button type="submit" class="btn p-0 px-2 btn-primary mx-2">Search</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                     <div class="d-flex flex-wrap">
-                        @foreach($sortMenus as $menu)
+                        @foreach($searchMenus as $menu)
                         <div class="col-3 mt-2 mb-2 mx-4">
                             <div class="card">
                                 <h1 class="card-title ">{{ $menu->dish_name }}</h1>
