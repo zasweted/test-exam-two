@@ -15,17 +15,16 @@ class RestaurantController extends Controller
      */
     public function index(Request $request, Restaurant $restaurant)
     {
-        
+
         $restaurants = $restaurant->sortRestaurants($request->sort);
 
         return view('restaurant.index', [
             'restaurants' => $restaurants,
             'sortSelect' => $request->sort,
         ]);
-
     }
 
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -45,20 +44,21 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'rest_name' => 'required',
-            'city' => 'required',
-            'address' => 'required',
-            'open_at' => 'required',
-            'close_at' => 'required'
-        ],
-        [
-            'rest_name.required' => 'The Restaurant Name field is required.',
-            'city.required' => 'The City field is required.',
-            'address.required' => 'The Address field is required.',
-            'open_at.required' => 'The Hours From  field is required.',
-            'close_at.required' => 'The Hours To field is required.',
-        ]
+        $request->validate(
+            [
+                'rest_name' => 'required',
+                'city' => 'required',
+                'address' => 'required',
+                'open_at' => 'required',
+                'close_at' => 'required'
+            ],
+            [
+                'rest_name.required' => 'The Restaurant Name field is required.',
+                'city.required' => 'The City field is required.',
+                'address.required' => 'The Address field is required.',
+                'open_at.required' => 'The Hours From  field is required.',
+                'close_at.required' => 'The Hours To field is required.',
+            ]
         );
 
         Restaurant::create([
@@ -80,14 +80,11 @@ class RestaurantController extends Controller
      */
     public function show(Restaurant $restaurant, Request $request)
     {
-
-        $sortMenus = $restaurant->sortMenu($request->sort);
-        $searchMenus = $restaurant->searchMenu($request->search);
-        // dd($search);
+        $sortMenus = $restaurant->sortAndSearchAllInOneMethod($request);
+        
         return view('restaurant.view', [
             'restaurant' => $restaurant,
             'sortMenus' => $sortMenus,
-            'searchMenus' => $searchMenus,
             'sortSelect' => $request->sort,
             'search' => $request->search ?? ''
         ]);
@@ -115,20 +112,21 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, Restaurant $restaurant)
     {
-        $request->validate([
-            'rest_name' => 'required',
-            'city' => 'required',
-            'address' => 'required',
-            'open_at' => 'required',
-            'close_at' => 'required'
-        ],
-        [
-            'rest_name.required' => 'The Restaurant Name field is required.',
-            'city.required' => 'The City field is required.',
-            'address.required' => 'The Address field is required.',
-            'open_at.required' => 'The Hours From  field is required.',
-            'close_at.required' => 'The Hours To field is required.',
-        ]
+        $request->validate(
+            [
+                'rest_name' => 'required',
+                'city' => 'required',
+                'address' => 'required',
+                'open_at' => 'required',
+                'close_at' => 'required'
+            ],
+            [
+                'rest_name.required' => 'The Restaurant Name field is required.',
+                'city.required' => 'The City field is required.',
+                'address.required' => 'The Address field is required.',
+                'open_at.required' => 'The Hours From  field is required.',
+                'close_at.required' => 'The Hours To field is required.',
+            ]
         );
 
         $restaurant->update([
@@ -150,13 +148,12 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
-        foreach($restaurant->getMenus as $menu)
-        if($menu->url){
-            
-            
-                unlink(public_path().'/storage/'. $menu->url);
-            
-        }
+        foreach ($restaurant->getMenus as $menu)
+            if ($menu->url) {
+
+
+                unlink(public_path() . '/storage/' . $menu->url);
+            }
         $restaurant->getMenus()->delete();
         $restaurant->delete();
 

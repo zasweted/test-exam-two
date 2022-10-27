@@ -18,7 +18,7 @@
                     <option value="title_asc" @if('title_asc' == $sortSelect) selected @endif>Name A - Z</option>
                     <option value="title_desc" @if('title_desc' == $sortSelect) selected @endif>Name Z - A</option>
                 </select>
-                <button type="submit" class="btn btn-primary mx-2">Sort</button>
+                <button type="submit" class="btn p-0 px-2 btn-primary mx-2">Sort</button>
             </div>
         </form>
     </div>
