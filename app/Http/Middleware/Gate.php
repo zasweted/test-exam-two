@@ -17,17 +17,24 @@ class Gate
      */
     public function handle(Request $request, Closure $next, $role)
     {
-
+        
+        
         $permissions = [
-            0 => ['user'],
-            10 => ['user', 'admin']
+            1 => ['user', 'home'],
+            10 => ['user', 'admin', 'home']
         ];
+
+        
+        if(!Auth::user()) {
+            return redirect('login');
+        }
 
         if(!in_array($role, $permissions[Auth::user()->role])){
             abort(401);
         }
 
         // dd(Auth::user()->role);
+        // dd(Auth::user());
         // dd($role);
         return $next($request);
     }

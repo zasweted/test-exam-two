@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123'),
             'created_at' => $time,
             'updated_at' => $time,
-            'role' => 0
+            'role' => 1
         ]);
     }
 }

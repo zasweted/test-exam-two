@@ -76,7 +76,7 @@
 
 
                     </div>
-                    @if(Auth::user()->role >= 1)
+                    @if(Auth::user()->role >= 10)
                     <div class="col-2">
                         <form action="{{ route('restaurant.delete', $restaurant) }}" method="post" onsubmit="return confirm('Are you sure you want to delete {{ $restaurant->rest_name }}');">
                             @csrf
