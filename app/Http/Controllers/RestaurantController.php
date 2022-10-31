@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -88,6 +89,12 @@ class RestaurantController extends Controller
             'sortSelect' => $request->sort,
             'search' => $request->search ?? ''
         ]);
+    }
+
+    public function rateMenu(Menu $menu, Request $request)
+    {
+        return redirect()->back();
+
     }
 
     /**

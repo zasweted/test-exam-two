@@ -20,13 +20,13 @@
                                 <div class="col-4 mb-4 mt-4">
                                     <label class="form-label mx-2" for="sort">Sort By: </label>
                                     <select name="sort" id="sort">
-                                        <option value="price_asc" @if('price_asc'==$sortSelect)  @endif>Price Low to High</option>
-                                        <option value="price_desc" @if('price_desc'==$sortSelect)  @endif>Price High to Low</option>
+                                        <option value="price_asc" @if('price_asc'==$sortSelect) @endif>Price Low to High</option>
+                                        <option value="price_desc" @if('price_desc'==$sortSelect) @endif>Price High to Low</option>
                                     </select>
                                     <button type="submit" class="btn p-0 px-2 btn-primary mx-2">Sort</button>
                                 </div>
-                            
-                                
+
+
                                 <div class="col-4 mb-4 mt-4">
                                     <label class="form-label mx-2" for="search">Search: </label>
                                     <input type="text" name="search" id="search" value="{{ $search }}">
@@ -36,8 +36,8 @@
                         </div>
                     </div>
                     <div class="d-flex flex-wrap">
-                    @forelse($sortMenus as $menu)
-                        <div class="col-3 mt-2 mb-2 mx-4">
+                        @forelse($sortMenus as $menu)
+                        <div class="col-5 mt-2 mb-2 mx-4">
                             <div class="card">
                                 <h1 class="card-title ">{{ $menu->dish_name }}</h1>
                                 <div class="card-body">
@@ -45,25 +45,43 @@
                                     <h5 class="card-title">{{ $menu->price }} $</h5>
                                     <span style="font-weight: 600">Image:</span>
                                     <img class="w-100" src="/storage/{{ $menu->url }}" alt="img">
+                                    <div class="col-auto">
+                                        <div>
+                                            <label for="rate_dish" class="col-form-label" style="font-weight: 600">Rate Menu Item:</label>
+                                            <div>
+                                                <form action="{{ route('restaurant.rate', $menu) }}" method="post">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <select name="rate_dish" id="rate_dish">
+                                                        @foreach(range(1, 5) as $rate)
+                                                        <option value="{{ $rate }}">{{ $rate }} Star</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <button type="submit" class="btn p-0 px-2 btn-warning mx-2">Rate</button>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    @empty
-                        <p>No Match...</p>
-                    @endforelse
-                        
+                        @empty
+                        <div class="row justify-content-center">
+                            <div class="col-11 mx-4">
+                                <h1>No Match Found ...</h1>
+                            </div>
+                        </div>
+                        @endforelse
+
 
                     </div>
-                    <div class="col-4">
+                    @if(Auth::user()->role >= 1)
+                    <div class="col-2">
                         <form action="{{ route('restaurant.delete', $restaurant) }}" method="post" onsubmit="return confirm('Are you sure you want to delete {{ $restaurant->rest_name }}');">
                             @csrf
                             @method('delete')
                             <div class="row g-3 align-items-center">
-                                <div class="col-auto">
-                                    <label class="col-form-label" style="font-weight: 600">Rate Us:</label>
-                                    <input min="0" max="5" type="number" name="open_at" id="open_at" class="form-control">
-                                    <button type="submit" class="btn btn-warning mt-4">Rate</button>
-                                </div>
                                 <div class="btn-group" role="group">
                                     <a href="{{ route('restaurant.edit', $restaurant) }}" class="btn btn-success mt-4">Edit</a>
                                     <button type="submit" class="btn btn-dark mt-4">Delete</button>
@@ -71,6 +89,7 @@
                             </div>
                         </form>
                     </div>
+                    @endif
             </div>
         </div>
         <div class="col-4 mx-3 mt-4">

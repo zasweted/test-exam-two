@@ -29,43 +29,6 @@ class Restaurant extends Model
         return $sortedRestaurants;
     }
 
-    // public function sortMenu($sort)
-    // {
-    //     $sortedMenu = match($sort){
-    //         'price_asc' => $this->hasMany(Menu::class, 'restaurant_id','id')->orderBy('price', 'asc')->get(),
-    //         'price_desc' => $this->hasMany(Menu::class, 'restaurant_id','id')->orderBy('price', 'desc')->get(),
-    //         default => $this->hasMany(Menu::class, 'restaurant_id','id')->get()
-    //     };
-
-    //     return $sortedMenu;
-    // }
-
-    // public function searchMenu($search)
-    // {
-    //     // if($search){
-    //     //     $searchMenu = explode(' ', $search);
-    //     //     if(count($searchMenu) == 1){
-    //     //         return $this->hasMany(Menu::class, 'restaurant_id', 'id')->where('dish_name', 'like', '%'.$search.'%');
-    //     //     }else{
-    //     //         return $this->hasMany(Menu::class, 'restaurant_id', 'id')
-    //     //         ->where('dish_name', 'like', '%'.$searchMenu[0].'%'.$searchMenu[1].'%')
-    //     //         ->orWhere('dish_name', 'like', '%'.$searchMenu[1].'%'.$searchMenu[0].'%')
-    //     //         ->orWhere('dish_name', 'like', '%'.$searchMenu[0].'%')
-    //     //         ->orWhere('dish_name', 'like', '%'.$searchMenu[1].'%');
-    //     //     }
-    //     // }else{
-    //     //     return $this->hasMany(Menu::class, 'restaurant_id','id');
-    //     // }
-
-    //     if($search){
-    //         return $this->hasMany(Menu::class, 'restaurant_id', 'id')
-    //         ->where('dish_name', 'like', '%'.$search.'%')->get();
-    //     }else{
-    //         return $this->hasMany(Menu::class, 'restaurant_id', 'id')->get();
-    //     }
-        
-    // }
-
     public function sortAndSearchAllInOneMethod($request)
     {
         if($request->search){
@@ -89,6 +52,11 @@ class Restaurant extends Model
             
         }
         
+        
+    }
+
+    public function rateRestaurant()
+    {
         
     }
 
