@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('dish_name');
             $table->decimal('price', 10, 2);
             $table->string('url');
+            $table->decimal('rate_dish', 4, 2)->nullable();
+            $table->unsignedBigInteger('rate_dish_sum')->default(0);
+            $table->unsignedBigInteger('rate_dish_count')->default(0);
             $table->unsignedBigInteger('restaurant_id');
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });

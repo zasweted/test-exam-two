@@ -47,18 +47,21 @@
                                     <img class="w-100" src="/storage/{{ $menu->url }}" alt="img">
                                     <div class="col-auto">
                                         <div>
-                                            <label for="rate_dish" class="col-form-label" style="font-weight: 600">Rate Menu Item:</label>
+                                            <label for="rate" class="col-form-label" style="font-weight: 600">Rate Menu Item:</label>
                                             <div>
                                                 <form action="{{ route('restaurant.rate', $menu) }}" method="post">
                                                     @csrf
                                                     @method('PUT')
-                                                    <select name="rate_dish" id="rate_dish">
+                                                    <select name="rate" id="rate">
                                                         @foreach(range(1, 5) as $rate)
                                                         <option value="{{ $rate }}">{{ $rate }} Star</option>
                                                         @endforeach
                                                     </select>
                                                     <button type="submit" class="btn p-0 px-2 btn-warning mx-2">Rate</button>
                                                 </form>
+                                                <div class="mt-2">
+                                                    <span style="font-weight: 600">Overall Rating: {{ $menu->rate_dish ?? 'No rating yet...' }}</span>
+                                                </div>
                                             </div>
 
                                         </div>

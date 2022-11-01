@@ -93,6 +93,11 @@ class RestaurantController extends Controller
 
     public function rateMenu(Menu $menu, Request $request)
     {
+
+        $menu->rate_dish_sum = $menu->rate_dish_sum + $request->rate;
+        $menu->rate_dish_count ++;
+        $menu->rate_dish = $menu->rate_dish_sum / $menu->rate_dish_count;
+        $menu->save();
         return redirect()->back();
 
     }

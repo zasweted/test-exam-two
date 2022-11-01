@@ -38,7 +38,7 @@
                             <label for="restaurant" class="form-label">Assign a Restaurant</label>
                             <select class="form-select" name="restaurant_id" id="restaurant">
                                 @foreach($restaurants as $restaurant)
-                                <option value="{{ $restaurant->id }}" selected>{{ $restaurant->rest_name }}</option>
+                                <option value="{{ $restaurant->id }}" selected>{{ $restaurant->rest_name }} - [{{ $restaurant->getMenus->count() }}]</option>
                                 @endforeach
                             </select>
                             @error('restaurant_id')
