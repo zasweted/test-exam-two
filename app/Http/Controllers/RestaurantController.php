@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RestaurantController extends Controller
 {
@@ -94,11 +95,19 @@ class RestaurantController extends Controller
     public function rateMenu(Menu $menu, Request $request)
     {
 
+        $votes = json_decode($menu->votes ?? json_encode([]));
+        if(in_array(Auth::user()->id, $votes)){
+            return redirect()->back()->with('message', 'You already voted!');
+        }
+        $votes[] = Auth::user()->id;
+        $menu->votes = json_encode($votes);
+
+
         $menu->rate_dish_sum = $menu->rate_dish_sum + $request->rate;
         $menu->rate_dish_count ++;
         $menu->rate_dish = $menu->rate_dish_sum / $menu->rate_dish_count;
         $menu->save();
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Your vote has been registered. Thank you for voting!');
 
     }
 

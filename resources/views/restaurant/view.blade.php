@@ -52,6 +52,7 @@
                                                 <form action="{{ route('restaurant.rate', $menu) }}" method="post">
                                                     @csrf
                                                     @method('PUT')
+
                                                     <select name="rate" id="rate">
                                                         @foreach(range(1, 5) as $rate)
                                                         <option value="{{ $rate }}">{{ $rate }} Star</option>
